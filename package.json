@@ -19,5 +19,8 @@
     "workers"
   ],
   "author": "aarush0101",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^13.4.0"
+  }
 }
