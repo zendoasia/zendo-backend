@@ -1,0 +1,23 @@
+{
+  "name": "zendo-backend",
+  "version": "1.0.0",
+  "description": "The backend server hosted on cloudflare workers for the Zendo website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "zendo-backend"
+  },
+  "keywords": [
+    "zendo-backend",
+    "zendo",
+    "website",
+    "backend",
+    "cloudflare",
+    "workers"
+  ],
+  "author": "aarush0101",
+  "license": "MIT"
+}
