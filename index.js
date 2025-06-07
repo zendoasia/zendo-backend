@@ -1,7 +1,7 @@
 import sendNotificationHandler from "./send-notification";
 
 const robotsTxt = `User-agent: *
-Disallow:`;
+Disallow: /`;
 
 export default {
   async fetch(request, env, ctx) {
