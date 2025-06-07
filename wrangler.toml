@@ -1,11 +1,10 @@
 name = "zendo-backend"
+main = "index.js"
 compatibility_date = "2025-06-06"
 compatibility_flags = ["nodejs_compat"]
 
-main = "index.js"
+[site]
+bucket = "./public"
 
 [observability.logs]
 enabled = true
-
-[site]
-bucket = "./public"
