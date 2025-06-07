@@ -6,7 +6,7 @@ export default {
     const url = new URL(request.url);
 
     try {
-      return await getAsset(request);
+      return await getAsset(request, env, ctx);
     } catch (err) {
       console.log(
         JSON.stringify({
