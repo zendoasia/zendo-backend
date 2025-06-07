@@ -1,4 +1,5 @@
 import sendNotificationHandler from "./send-notification";
+import { respond, verifyFrontendJWT } from "./utils";
 
 const robotsTxt = `User-agent: *
 Disallow: /`;
@@ -9,39 +10,34 @@ export default {
     const pathname = url.pathname;
 
     if (pathname === "/robots.txt") {
-      return new Response(robotsTxt, {
-        headers: {
-          "Content-Type": "text/plain",
-        },
-      });
+      return respond(robotsTxt, 200);
     }
 
     if (request.method !== "POST") {
-      return new Response(
-        JSON.stringify({
-          error: 405,
-          message: "This server does not accept any non-POST requests.",
-        }),
-        {
-          status: 405,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return respond("This server does not accept any non-POST requests.", 405);
     }
 
-    if (url.pathname === "/send-notification") {
+    const authHeader = request.headers.get("authorization");
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return respond("Either no authentication token was found, or headers were malformed.", 403);
+    }
+
+    const token = authHeader.slice("Bearer ".length).trim();
+
+    try {
+      await verifyFrontendJWT(env, token);
+    } catch (err) {
+      console.log(`Invalid request from another origin or JWT verification error: ${err}`);
+      return respond("Either your token is invalid or there was a issue validating it.", 403);
+    }
+
+    // Continue
+
+    if (pathname === "/send-notification") {
       return sendNotificationHandler.fetch(request, env, ctx);
     }
 
-    return new Response(
-      JSON.stringify({
-        code: 404,
-        message: "The route you are searching for was not found.",
-      }),
-      {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return respond("The route you are searching for was not found.", 404);
   },
 };

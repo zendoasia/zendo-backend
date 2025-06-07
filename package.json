@@ -4,7 +4,8 @@
   "description": "The backend server hosted on cloudflare workers for the Zendo website.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,15 @@
   "author": "aarush0101",
   "license": "MIT",
   "dependencies": {
-    "firebase-admin": "^13.4.0"
+    "firebase-admin": "^13.4.0",
+    "jose": "^6.0.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3"
   }
 }
