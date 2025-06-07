@@ -1,13 +1,18 @@
 import sendNotificationHandler from "./send-notification";
+import favicon from "./favicon.ico";
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    await env.ANALYTICS_ENGINE.writeDataPoint({
-      blobs: ["user_visited"],
-      doubles: [1.0],
-      indexes: [Date.now()],
-    });
+    if (url.pathname === "/favicon.ico") {
+      return new Response(favicon, {
+        headers: {
+          "Content-Type": "image/x-icon",
+          "Cache-Control": "public, max-age=31536000",
+        },
+      });
+    }
+
     if (!request.method === "POST") {
       return new Response(
         {
