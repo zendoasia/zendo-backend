@@ -1,18 +1,20 @@
-import { serveStatic } from "wrangler";
 import sendNotificationHandler from "./send-notification";
+
+const robotsTxt = `User-agent: *
+Disallow:`;
 
 export default {
   async fetch(request, env, ctx) {
-    const staticResponse = await serveStatic(request, {
-      root: "./public",
-    });
-
-    // If static file was found, return it
-    if (staticResponse.status !== 404) {
-      return staticResponse;
-    }
-
     const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    if (pathname === "/robots.txt") {
+      return new Response(robotsTxt, {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      });
+    }
 
     if (request.method !== "POST") {
       return new Response(
