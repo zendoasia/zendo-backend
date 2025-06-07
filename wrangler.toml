@@ -1,13 +1,8 @@
 name = "zendo-backend"
 compatibility_date = "2025-06-06"
 compatibility_flags = ["nodejs_compat"]
-type = "javascript"
 
 main = "index.js"
 
 [observability.logs]
 enabled = true
-
-
-[build]
-upload.format = "modules"

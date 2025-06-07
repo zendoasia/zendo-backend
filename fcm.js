@@ -30,7 +30,9 @@ export async function sendFCMNotification({ token, title, body, data, env }) {
     token,
     notification: {
       title: title || "Thank you for installing Zendo! 🎉",
-      body: body || "Welcome to the Zendo experience! Consider supporting the project.",
+      body:
+        body ||
+        "Welcome to the Zendo experience! Consider supporting the project.",
     },
     data: {
       url: data?.url || "/kofi",
@@ -42,7 +44,11 @@ export async function sendFCMNotification({ token, title, body, data, env }) {
           title: "Support on Ko-fi ☕",
           icon: "/assets/icons/maskable-icon.png",
         },
-        { action: "explore", title: "Explore App", icon: "/assets/icons/maskable-icon.png" },
+        {
+          action: "explore",
+          title: "Explore App",
+          icon: "/assets/icons/maskable-icon.png",
+        },
       ]),
     },
     webpush: {
@@ -57,7 +63,11 @@ export async function sendFCMNotification({ token, title, body, data, env }) {
             title: "Support on Ko-fi ☕",
             icon: "/assets/icons/maskable-icon.png",
           },
-          { action: "explore", title: "Explore App", icon: "/assets/icons/maskable-icon.png" },
+          {
+            action: "explore",
+            title: "Explore App",
+            icon: "/assets/icons/maskable-icon.png",
+          },
         ],
       },
     },

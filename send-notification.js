@@ -8,7 +8,7 @@ export default {
           error: 405,
           message: "This server does not accept any non-POST requests.",
         },
-        { status: 405, headers: { "Content-Type": "application/json" } }
+        { status: 405, headers: { "Content-Type": "application/json" } },
       );
     }
     try {
@@ -27,7 +27,7 @@ export default {
           messageId,
           message: "Notification sent successfully",
         }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+        { status: 200, headers: { "Content-Type": "application/json" } },
       );
     } catch (error) {
       return new Response(
@@ -36,7 +36,7 @@ export default {
           message: "Failed to send notification",
           details: error instanceof Error ? error.message : "Unknown error",
         }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       );
     }
   },
