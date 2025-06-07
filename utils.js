@@ -15,7 +15,7 @@ export function respond(message, code, { ...options } = {}) {
 }
 
 export async function verifyFrontendJWT(env, token) {
-  const { payload } = await jwtVerify(token, env.JWT_SHARED_SECRET, {
+  const { payload } = await jwtVerify(token, env.NEXT_PRIVATE_JWT_SHARED_SECRET, {
     algorithms: ["HS256"],
   });
   return payload;
