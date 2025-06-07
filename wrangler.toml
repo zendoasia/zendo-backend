@@ -6,3 +6,7 @@ main = "index.js"
 
 [observability.logs]
 enabled = true
+
+analytics_engine_datasets = [
+  { binding = "ANALYTICS_ENGINE", dataset = "analytics_event" }
+]

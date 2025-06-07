@@ -1,12 +1,15 @@
 import { sendFCMNotification } from "./fcm";
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     if (request.method !== "POST") {
-      return new Response(JSON.stringify({ error: "Method not allowed" }), {
-        status: 405,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        {
+          error: 405,
+          message: "This server does not accept any non-POST requests.",
+        },
+        { status: 405, headers: { "Content-Type": "application/json" } }
+      );
     }
     try {
       const body = await request.json();
@@ -20,7 +23,7 @@ export default {
       });
       return new Response(
         JSON.stringify({
-          success: true,
+          code: 200,
           messageId,
           message: "Notification sent successfully",
         }),
@@ -29,7 +32,8 @@ export default {
     } catch (error) {
       return new Response(
         JSON.stringify({
-          error: "Failed to send notification",
+          code: 500,
+          message: "Failed to send notification",
           details: error instanceof Error ? error.message : "Unknown error",
         }),
         { status: 500, headers: { "Content-Type": "application/json" } }
