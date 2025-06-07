@@ -1,3 +1,3 @@
 npm run lint
 
-wrangler secret bulk .env --project-name zendo-backend
+wrangler secret bulk .env --name zendo-backend

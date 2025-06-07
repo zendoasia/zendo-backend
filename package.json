@@ -4,7 +4,6 @@
   "description": "The backend server hosted on cloudflare workers for the Zendo website.",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky",
     "lint": "eslint ."
   },
   "repository": {
