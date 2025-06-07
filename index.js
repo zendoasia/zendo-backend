@@ -1,19 +1,20 @@
 import sendNotificationHandler from "./send-notification";
+import { getAsset } from "@cloudflare/kv-asset-handler";
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/favicon.ico") {
-      const iconUrl = import.meta.resolve("./favicon.ico");
-      const res = await fetch(iconUrl);
-
-      return new Response(res.body, {
-        headers: {
-          "Content-Type": "image/x-icon",
-          "Cache-Control": "public, max-age=31536000"
-        }
-      });
+    try {
+      return await getAsset(request);
+    } catch (err) {
+      console.log(
+        JSON.stringify({
+          level: "info",
+          event: "asset_not_found",
+          url: request.url,
+        })
+      );
     }
 
     if (request.method !== "POST") {
