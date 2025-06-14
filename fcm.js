@@ -49,8 +49,8 @@ export async function sendFCMNotification({ token, title, body, data, env }) {
   const message = {
     token,
     notification: {
-      title: title || "Thank you for installing Zendo! 🎉",
-      body: body || "Welcome to the Zendo experience! Consider supporting the project.",
+      title: title || "Zendo",
+      body: body || "You had a new notification minutes ago! Check it out!",
     },
     data: {
       url: data?.url || "/kofi",
