@@ -5,3 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 
 [observability.logs]
 enabled = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"

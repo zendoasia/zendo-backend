@@ -9,8 +9,8 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
-    if (pathname === "/robots.txt") {
-      return respond(robotsTxt, 200);
+    if (pathname === "/robots.txt" || pathname === "/favicon.ico") {
+      return await env.ASSETS.fetch(request);
     }
 
     if (request.method !== "POST") {
