@@ -1,48 +1,74 @@
-# Cloudflare Worker FCM Notification Service
+# Zendo Backend
 
-This folder contains the backend logic for sending Firebase Cloud Messaging (FCM) notifications, extracted from the main Next.js project. You can move this folder to a new repository and deploy it as a Cloudflare Worker with secrets.
+The Zendo Backend is a serverless backend for the Zendo website, hosted on Cloudflare Workers. It provides secure endpoints for sending push notifications to clients using Firebase Cloud Messaging (FCM).
 
-## Files
+## Features
 
-- `fcm.js`: Contains the logic to initialize Firebase Admin SDK and send FCM notifications.
-- `send-notification.js`: Cloudflare Worker entrypoint that exposes a POST endpoint to send notifications.
+- **Serverless**: Runs on Cloudflare Workers for scalability and low latency.
+- **Push Notifications**: Sends notifications to clients via FCM.
+- **JWT Authentication**: Secures endpoints using JSON Web Tokens.
+- **Static Asset Serving**: Serves static files like `robots.txt` and `favicon.ico` from the `public` directory.
 
-## Usage
+## Endpoints
 
-1. **Set up environment variables (secrets) in Cloudflare Worker dashboard or wrangler.toml:**
+### `POST /send-notification`
 
-   - `FIREBASE_PROJECT_ID`
-   - `FIREBASE_PRIVATE_KEY_ID`
-   - `FIREBASE_PRIVATE_KEY`
-   - `FIREBASE_CLIENT_EMAIL`
-   - `FIREBASE_CLIENT_ID`
+Sends a push notification to a client device using FCM.
 
-2. **Deploy the worker using Wrangler:**
+**Request Body (JSON):**
 
-   - Update `wrangler.toml` with the correct entrypoint and bindings.
-   - Deploy: `npx wrangler deploy`
+- `token` (string): FCM device token (required)
+- `title` (string): Notification title (optional)
+- `body` (string): Notification body (optional)
+- `data` (object): Additional data (optional)
 
-3. **Call the Worker endpoint from your Next.js app:**
-   - Make a POST request to the Worker URL with `{ token, title, body, data }` in the JSON body.
+**Headers:**
 
-## Example Request
+- `Authorization: Bearer <JWT>` (required)
 
-```json
-POST /send-notification
-Content-Type: application/json
-{
-  "token": "<fcm_token>",
-  "title": "Hello!",
-  "body": "This is a test notification.",
-  "data": { "url": "/kofi", "action": "support" }
-}
-```
+**Response:**
 
-## Security
+- `200 OK` with message ID on success
+- `400/403/500` with error message on failure
 
-- **Never expose your Firebase Admin credentials to the client or in edge code.**
-- This worker should be deployed in a secure environment with secrets managed by Cloudflare.
+## Project Structure
 
----
+- `index.js` — Main entry point and routing logic
+- `send-notification.js` — Handles notification requests
+- `fcm.js` — FCM integration and message formatting
+- `utils.js` — Utility functions (response formatting, JWT verification)
+- `public/` — Static assets (e.g., `robots.txt`, `favicon.ico`)
+- `wrangler.toml` — Cloudflare Workers configuration
 
-Move this folder to a new repo and deploy as a Cloudflare Worker. Then update your Next.js app to call the new endpoint for sending notifications.
+## Setup & Deployment
+
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Configure environment variables:**
+   Set Firebase and JWT secrets in your Cloudflare Worker environment.
+3. **Lint code:**
+   ```sh
+   npm run lint
+   ```
+4. **Deploy:**
+   Use [Wrangler](https://developers.cloudflare.com/workers/wrangler/) to deploy:
+   ```sh
+   npx wrangler deploy
+   ```
+
+## Environment Variables
+
+Set the following secrets in your Cloudflare Worker environment:
+
+- `NEXT_PRIVATE_FIREBASE_PROJECT_ID`
+- `NEXT_PRIVATE_FIREBASE_PRIVATE_KEY_ID`
+- `NEXT_PRIVATE_FIREBASE_PRIVATE_KEY`
+- `NEXT_PRIVATE_FIREBASE_CLIENT_EMAIL`
+- `NEXT_PRIVATE_FIREBASE_CLIENT_ID`
+- `NEXT_PRIVATE_JWT_SHARED_SECRET`
+
+## License
+
+MIT - See LICENSE for more details

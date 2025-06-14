@@ -1,9 +1,6 @@
 import sendNotificationHandler from "./send-notification";
 import { respond, verifyFrontendJWT } from "./utils";
 
-const robotsTxt = `User-agent: *
-Disallow: /`;
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);

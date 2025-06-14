@@ -12,7 +12,7 @@ export default {
           return respond("Request body is empty or invalid", 400);
         }
       } catch (err) {
-        console.log(`Error while decoding JSON body of notification: ${err}`)
+        console.log(`Error while decoding JSON body of notification: ${err}`);
         return respond("Malformed JSON body", 400);
       }
 
